@@ -1,0 +1,5 @@
+node_modules/
+ledger.ndjson
+.env
+*.log
+.DS_Store
