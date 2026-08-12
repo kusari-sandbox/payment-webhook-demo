@@ -21,7 +21,9 @@ jobs:
       - name: Download waybill
         env:
           GH_TOKEN: ${{ github.token }}
+        # installed from a temp dir so waybill's own artifacts never enter the scanned tree
         run: |
+          cd "$(mktemp -d)"
           gh release download v0.2.0 -R kusari-oss/waybill \
             -p 'waybill-v0.2.0-x86_64-unknown-linux-gnu.tar.gz'
           tar -xzf waybill-v0.2.0-x86_64-unknown-linux-gnu.tar.gz
