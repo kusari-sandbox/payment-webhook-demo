@@ -15,7 +15,9 @@ this repository, and none should ever be sent to it.
 
 ## Maintenance stance
 
-Pinned on purpose; this is a museum piece. Dependencies are not updated. In
+Pinned on purpose. This repo works like a fire academy's burn building: the
+vulnerability is real, the conditions are controlled, and everything stays in
+place so each reader gets the same drill. Dependencies are not updated. In
 particular, `node-fetch` is pinned to `2.6.6`, a version with a known, publicly
 documented vulnerability (CVE-2022-0235). That is intentional: the guide walks
 readers through discovering and fixing it. The vulnerability is not practically
