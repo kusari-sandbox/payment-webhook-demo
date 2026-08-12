@@ -1,0 +1,38 @@
+name: release-sbom
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Download waybill
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download v0.2.0 -R kusari-oss/waybill \
+            -p 'waybill-v0.2.0-x86_64-unknown-linux-gnu.tar.gz'
+          tar -xzf waybill-v0.2.0-x86_64-unknown-linux-gnu.tar.gz
+          sudo install -m 0755 waybill-v0.2.0-x86_64-unknown-linux-gnu/waybill /usr/local/bin/waybill
+      - name: Generate SBOM
+        run: waybill sbom scan --path . --format cyclonedx-json --output payment-webhook-demo.cdx.json
+      - name: Attest SBOM provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: payment-webhook-demo.cdx.json
+      - name: Upload SBOM to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" payment-webhook-demo.cdx.json

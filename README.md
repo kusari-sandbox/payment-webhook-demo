@@ -47,6 +47,16 @@ curl -X POST http://127.0.0.1:3000/webhook/payment \
   -d "$BODY"
 ```
 
+## Releases
+
+Each release publishes a CycloneDX SBOM (`payment-webhook-demo.cdx.json`) generated
+by [waybill](https://github.com/kusari-oss/waybill), with a GitHub artifact
+attestation covering it. Verify with:
+
+```
+gh attestation verify payment-webhook-demo.cdx.json -R kusari-sandbox/payment-webhook-demo
+```
+
 ## The open demonstration PR
 
 This repository keeps one pull request open on purpose. It is titled
