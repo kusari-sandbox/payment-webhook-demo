@@ -14,8 +14,9 @@
   },
   "dependencies": {
     "dotenv": "^17.4.2",
-    "express": "^5.2.1",
+    "express": "4.17.1",
     "node-fetch": "2.6.6",
-    "pino": "^10.3.1"
+    "pino": "^10.3.1",
+    "request": "2.88.2"
   }
 }
